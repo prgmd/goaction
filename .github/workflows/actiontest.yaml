@@ -21,11 +21,21 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: build and release to DockerHub
+      - name: build
         env:
           NAME: prgmd
           REPO: actiontest
         run:
-          docker build -t $REPO .
+
+      - name: tagging
+        env:
+          NAME: prgmd
+          REPO: actiontest
+        run:
           docker tag $REPO:latest $NAME/$REPO:latest
+      - name: Release To Dockerhub
+        env:
+          NAME: prgmd
+          REPO: actiontest
+        run:
           docker push $NAME/$REPO.latest
