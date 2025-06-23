@@ -13,6 +13,7 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.15
+
       - name: Build Go Application
         run: go build -v ./...
 
@@ -21,23 +22,24 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build Docker Image
         env:
-          NAME: prgmd
+          NAME: paragomad
           REPO: actiontest
         run:
           docker build -t $REPO .
 
       - name: Tag Docker Image
         env:
-          NAME: prgmd
+          NAME: paragomad
           REPO: actiontest
         run:
           docker tag $REPO:latest $NAME/$REPO:latest
 
       - name: Push To Dockerhub
         env:
-          NAME: prgmd
+          NAME: paragomad
           REPO: actiontest
         run:
           docker push $NAME/$REPO:latest
