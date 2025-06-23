@@ -13,6 +13,7 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.15
+
       - name: Build
         run: go build -v ./...
       - name: DockerHub Login
@@ -28,14 +29,14 @@ jobs:
 
       - name: tagging
         env:
-          NAME: prgmd
+          NAME: paragomad
           REPO: actiontest
         run:
           docker tag $REPO:latest $NAME/$REPO:latest
 
       - name: Release To Dockerhub
         env:
-          NAME: prgmd
+          NAME: paragomad
           REPO: actiontest
         run:
           docker push $NAME/$REPO:latest
